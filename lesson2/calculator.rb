@@ -26,7 +26,7 @@ loop do
   name = gets.chomp
 
   if name == ''
-    prompt ('Make sure you use a valid name!')
+    prompt('Make sure you use a valid name!')
   else
     break
   end
@@ -60,11 +60,11 @@ loop do
     end
   end
 
-  operator_prompt = <<-MSG #Multi line string. MSG can be anything (delimeters)
+  operator_prompt = <<-MSG # Multi line string. MSG can be anything (delimeters)
     What operation would you like to perform?
-    1) Add 
-    2) Subtract 
-    3) Multiply 
+    1) Add
+    2) Subtract
+    3) Multiply
     4) Divide
   MSG
 
@@ -83,15 +83,15 @@ loop do
 
   prompt("#{operation_to_message(operation)} your numbers...")
 
-  #if operation == 1
-  #  result = number1.to_i + number2.to_i
-  #elsif operation == 2
-  #  result = number1.to_i - number2.to_i
-  #elsif operation == 3
-  #  result = number1.to_i * number2.to_i
-  #elsif operation == 4
-  #  result = number1.to_f / number2.to_f
-  #end
+  # if operation == 1
+  #   result = number1.to_i + number2.to_i
+  # elsif operation == 2
+  #   result = number1.to_i - number2.to_i
+  # elsif operation == 3
+  #   result = number1.to_i * number2.to_i
+  # elsif operation == 4
+  #   result = number1.to_f / number2.to_f
+  # end
 
   result = case operation
            when '1'
@@ -103,7 +103,6 @@ loop do
            when '4'
              number1.to_f / number2.to_f
            end
-
 
   prompt("Your number is #{result}")
 
