@@ -25,28 +25,23 @@ def win?(first, second)
     if ['scissors', 'lizard'].include?(second)
       true
     end
-
   when 'scissors'
     if ['paper', 'lizard'].include?(second)
       true
     end
-
   when 'paper'
     if ['rock', 'Spock'].include?(second)
       true
     end
-
   when 'lizard'
     if ['Spock', 'paper'].include?(second)
       true
     end
-
   when 'Spock'
     if ['scissors', 'rock'].include?(second)
       true
     end
   end
-
   false
 end
 
