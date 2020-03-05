@@ -127,4 +127,81 @@ def practice_problem9
   p new_arr
 end
 
-practice_problem9
+def practice_problem10
+  arr = [{a: 1}, {b: 2, c: 3}, {d: 4, e: 5, f: 6}]
+
+  new_hash = arr.map do |val|
+    result = {}
+    val.each do |key, value|
+      result[key] = value + 1
+    end
+    result
+  end
+  p new_hash
+end
+
+def practice_problem11
+  arr = [[2], [3, 5, 7], [9], [11, 13, 15]]
+
+  new_array = arr.map do |sub|
+    sub.select do |item|
+      item % 3 == 0
+    end
+  end
+
+  p new_array
+end
+
+def practice_problem12
+  arr = [[:a, 1], ['b', 'two'], ['sea', {c: 3}], [{a: 1, b: 2, c: 3, d: 4}, 'D']]
+  new_hash = {}
+  arr.each do |key, value|
+    new_hash[key] = value
+  end
+  p new_hash
+end
+
+def practice_problem13
+  arr = [[1, 6, 7], [1, 4, 9], [1, 8, 3]]
+
+  arr.sort_by! do |sub_arr|
+    sub_arr.select do |num|
+      num.odd?
+    end
+  end
+  p arr
+end
+
+def practice_problem14
+  hsh = {
+    'grape' => {type: 'fruit', colors: ['red', 'green'], size: 'small'},
+    'carrot' => {type: 'vegetable', colors: ['orange'], size: 'medium'},
+    'apple' => {type: 'fruit', colors: ['red', 'green'], size: 'medium'},
+    'apricot' => {type: 'fruit', colors: ['orange'], size: 'medium'},
+    'marrow' => {type: 'vegetable', colors: ['green'], size: 'large'},
+  }
+  new_arr = hsh.map do |key, value|
+    if value[:type] == 'fruit'
+      value[:colors].map do |color|
+        color.capitalize
+      end
+    elsif value[:type] == 'vegetable'
+      value[:size].capitalize
+    end
+  end
+  p new_arr
+end
+
+def practice_problem15
+  arr = [{a: [1, 2, 3]}, {b: [2, 4, 6], c: [3, 6], d: [4]}, {e: [8], f: [6, 10]}]
+  new_arr = []
+  arr.each do |hash|
+    hash.each do |key, value|
+      if value.all? { |x| x % 2 == 0 }
+        new_arr[key] = value
+      end
+    end
+  end
+end
+
+practice_problem15
