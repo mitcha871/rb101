@@ -5,13 +5,13 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # columns
                 [[1, 5, 9], [3, 5, 7]]              # diagonals
 MAX_SCORE = 2
-FIRST_TURN_SETTING = 'choose' #player/computer/choose
+FIRST_TURN_SETTING = 'choose' # player/computer/choose
 
 def prompt(msg)
   puts "=> #{msg}"
 end
 
-def first_mover
+def set_first_mover
   first_mover = nil
   if FIRST_TURN_SETTING == 'choose'
     prompt "Who plays first? Player or Computer? (Choose P or C)"
@@ -21,8 +21,8 @@ def first_mover
       prompt "Invalid input. Choose P or C."
     end
     case first_mover
-      when 'P' then 'player'
-      when 'C' then 'computer'
+    when 'P' then 'player'
+    when 'C' then 'computer'
     end
   else
     FIRST_TURN_SETTING
@@ -97,6 +97,7 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
+# rubocop:disable Metrics/CyclomaticComplexity
 def computer_places_piece!(brd)
   square = nil
 
@@ -112,22 +113,16 @@ def computer_places_piece!(brd)
     end
   end
 
-  if !square && empty_squares(brd).include?(5)
-    square = 5
-  end
-
-  if !square
-    square = empty_squares(brd).sample
-  end
+  square = 5 if !square && empty_squares(brd).include?(5)
+  square = empty_squares(brd).sample if !square
 
   brd[square] = COMPUTER_MARKER
 end
+# rubocop:enable Metrics/CyclomaticComplexity
 
 def find_at_risk_square(brd, line, marker)
   if brd.values_at(*line).count(marker) == 2
     brd.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
-  else
-    nil
   end
 end
 
@@ -159,7 +154,7 @@ def detect_winner(brd)
   nil
 end
 
-score = { :player => 0, :computer => 0 }
+score = { player: 0, computer: 0 }
 def award_point!(winner, score)
   if winner == 'Player'
     score[:player] += 1
@@ -173,10 +168,11 @@ end
 system 'clear'
 prompt "Welcome to Tic Tac Toe"
 
-current_player = first_mover
+first_mover = set_first_mover
 
 loop do
   board = initialize_board
+  current_player = first_mover
 
   loop do
     display_board(board)
@@ -199,7 +195,8 @@ loop do
   prompt "Computer #{score[:computer]}"
 
   if score.value?(MAX_SCORE)
-    prompt "#{score.key(MAX_SCORE).capitalize} is the first to #{MAX_SCORE} wins!"
+    prompt "#{score.key(MAX_SCORE).capitalize} " \
+           "is the first to #{MAX_SCORE} wins!"
     break
   end
 
