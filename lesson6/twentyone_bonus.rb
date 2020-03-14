@@ -6,7 +6,7 @@
 # -> The player can hit as many times as they want, unless they bust
 # -> If the player busts, the dealer wins
 # The dealer hits until they go over 17 or bust
-require "pry"
+
 GOAL = 21
 DEALER_STOP = 17
 ROUNDS = 5
