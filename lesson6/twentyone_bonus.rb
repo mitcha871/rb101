@@ -6,9 +6,10 @@
 # -> The player can hit as many times as they want, unless they bust
 # -> If the player busts, the dealer wins
 # The dealer hits until they go over 17 or bust
-
+require "pry"
 GOAL = 21
 DEALER_STOP = 17
+ROUNDS = 5
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -92,12 +93,25 @@ def winner(status)
   end
 end
 
+def add_win!(player, status)
+  status[player.downcase.to_sym][:wins] += 1
+end
+
+def reset_status(status)
+  status.each_value do |stats|
+    stats[:cards] = []
+    stats[:busted] = false
+    stats[:card_sum] = 0
+  end
+end
+
 # Main game loop
+status = { player: { cards: [], busted: false, card_sum: 0, wins: 0 },
+           dealer: { cards: [], busted: false, card_sum: 0, wins: 0 } }
 loop do
   system 'clear'
   deck = initialize_deck
-  status = { player: { cards: [], busted: false, card_sum: 0 },
-             dealer: { cards: [], busted: false, card_sum: 0 } }
+  reset_status(status)
   initial_deal(deck, status)
 
   # Player turn
@@ -106,8 +120,8 @@ loop do
     prompt "Player Hand: #{status[:player][:cards].join(', ')}"
     puts ''
 
-    player_turn = hit_or_stay
-    break if player_turn.downcase.start_with?('s')
+    player_move = hit_or_stay
+    break if player_move.downcase.start_with?('s')
 
     take_turn(:player, deck, status)
     if status[:player][:busted]
@@ -143,9 +157,16 @@ loop do
     prompt "It's a tie!"
   else
     prompt "#{winner(status)} wins!"
+    add_win!(winner(status), status)
   end
 
   puts ''
+  prompt "Score is: Player: #{status[:player][:wins]}; "\
+         "Dealer: #{status[:dealer][:wins]}"
+  if status[:player][:wins] == ROUNDS || status[:dealer][:wins] == ROUNDS
+    prompt "The #{winner(status)} is the overall winner!"
+    break
+  end
   prompt 'Play Again? (y/n)'
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
