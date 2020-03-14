@@ -48,13 +48,9 @@ def update_total!(player, status)
     status[player][:card_sum] += 10
   when 'Ace'
     status[player][:card_sum] += 11
-    correct_aces!(player, status)
-  end
-end
-
-def correct_aces!(player, status)
-  if status[player][:card_sum] > GOAL
-    status[player][:card_sum] -= 10
+    if status[player][:card_sum] > GOAL
+      status[player][:card_sum] -= 10
+    end
   end
 end
 
